@@ -1,0 +1,210 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  color: white;
+  font-size: 70%;
+  align-items: center;
+  font-family: "Montserrat", sans-serif;
+}
+
+button {
+  border: none;
+  outline: none;
+  color: white;
+  cursor: pointer;
+  font-size: 150%;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.expander {
+  font-size: 90%;
+}
+
+.maincolumns {
+  margin: auto;
+  justify-content: stretch;
+  background-image: linear-gradient(
+    to right top,
+    rgb(153, 181, 233),
+    rgb(0, 17, 255),
+    purple
+  );
+  /* border: 3px solid purple; */
+}
+
+.mainpart {
+  min-width: 15vw;
+  min-height: 40vh;
+  align-items: center;
+  justify-content: space-between;
+  /* border: 10px solid green; */
+}
+
+.columns,
+.mainpart {
+  display: flex;
+  flex-direction: column;
+}
+
+.columncontainer {
+  min-width: 15vw;
+  padding: 5px 4px;
+  justify-content: space-between;
+}
+
+.flexed,
+.columncontainer {
+  display: flex;
+  align-items: center;
+  /* border: 1px solid pink; */
+}
+
+.playlistimage {
+  width: 2.5vw;
+  height: 2.5vw;
+  padding: 2px;
+}
+
+.playedimagecontainer {
+  min-width: 15vw;
+  min-height: 15vh;
+  background-size: contain;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-image: url(https://www.musicnotes.com/now/wp-content/uploads/the-miracle-queen.jpg);
+}
+
+.meter {
+  width: 100%;
+  height: 8px;
+  margin: 10px 10px;
+  border-radius: 1vw;
+  background-color: black;
+  border: 1px solid green;
+}
+
+input[type="range"] {
+  display: block;
+  height: 100%;
+  width: 100%;
+  border: 1px 0 1px 1px solid yellow;
+  border-radius: 1vw 0.5vw 0.5vw 1vw;
+
+  -webkit-appearance: none;
+  border: 1vw 0.5vw 0.5vw 1vw;
+
+  -webkit-border-radius: 0.5vw;
+  -moz-border-radius: 0.5vw;
+  border-radius: 0.5vw;
+  background-color: whitesmoke;
+}
+
+input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 0.5vw;
+  height: 0.5vw;
+
+  -webkit-border-radius: 0.5vw;
+  border-radius: 0.5vw;
+  background: #80e4df;
+  background: -webkit-linear-gradient(
+    top,
+    #80e4df 0%,
+    #75dbd6 13%,
+    #5ec4bf 33%,
+    #57bbb6 47%,
+    #419d99 80%,
+    #378f8b 100%
+  );
+
+  background: -moz-linear-gradient(
+    top,
+    #80e4df 0%,
+    #75dbd6 13%,
+    #5ec4bf 33%,
+    #57bbb6 47%,
+    #419d99 80%,
+    #378f8b 100%
+  );
+  background: -o-linear-gradient(
+    top,
+    #80e4df 0%,
+    #75dbd6 13%,
+    #5ec4bf 33%,
+    #57bbb6 47%,
+    #419d99 80%,
+    #378f8b 100%
+  );
+  background: linear-gradient(
+    top,
+    #80e4df 0%,
+    #75dbd6 13%,
+    #5ec4bf 33%,
+    #57bbb6 47%,
+    #419d99 80%,
+    #378f8b 100%
+  );
+}
+
+.buttoncontainer {
+  flex: 1;
+  display: flex;
+  padding: 0 30px;
+  align-items: center;
+  justify-content: space-around;
+  /* border: 3px dashed purple; */
+}
+
+.songinfocontainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.smalltext {
+  font-size: 70%;
+  color: lightgray;
+  /* border: 10px solid green; */
+}
+
+.playlistpart {
+  justify-content: start;
+  align-items: flex-start;
+  color: lightgray;
+}
+
+.hovercontainer {
+  border-radius: 0.5vw;
+  /* border: 1px solid gray; */
+}
+
+.hovercontainer:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.hovercontainer:hover * {
+  color: yellow;
+}
+
+#startSong,
+#stopSong {
+  font-size: 250%;
+}
+
+#stopSong {
+  display: none;
+}
+
+section :not(.columncontainer):not(.imagecontainer):not(.buttoncontainer) {
+  flex: 1;
+  text-align: center;
+  /* border: 1px dashed red; */
+}
+
+section
+  :not(.columncontainer):nth-child(2):not(.imagecontainer):not(article):not(i) {
+  flex: 8;
+  /* border: 5px solid yellow; */
+}

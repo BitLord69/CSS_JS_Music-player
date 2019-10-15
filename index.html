@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="normalize.css" />
+    <link rel="stylesheet" href="style.css" />
+    <script
+      src="http://code.jQuery.com/jQuery-latest.js"
+      type="text/javascript"
+    ></script>
+    <script
+      src="https://kit.fontawesome.com/7aeeac2161.js"
+      crossorigin="anonymous"
+    ></script>
+    <title>Musikspelare</title>
+  </head>
+  <body>
+    <br /><br /><br /><br />
+    <section class="columns">
+      <section class="maincolumns">
+        <!-- Här ligger headern -->
+        <section class="columncontainer">
+          <section class="hovercontainer">
+            <article>
+              <button id="expandbtn" onclick="shrink()">
+                <i id="expandIcon" class="fas fa-angle-right"></i>
+              </button>
+            </article>
+          </section>
+          <section>
+            <article>Playlist - bluesy</article>
+          </section>
+          <section class="hovercontainer">
+            <article><i class="fas fa-ellipsis-v"></i></article>
+          </section>
+        </section>
+        <!-- Yttre behållare som innehåller spellistan och spelarföntret -->
+        <section class="flexed">
+          <!-- Spellistan börjar här -->
+          <section id="playlist" class="mainpart columncontainer playlistpart">
+            <!-- Här är en låt i spellistan -->
+            <section class="columncontainer hovercontainer changeSongContainer">
+              <section>
+                <img
+                  class="playlistimage"
+                  src="https://www.musicnotes.com/now/wp-content/uploads/the-miracle-queen.jpg"
+                  data-songurl="https://archive.org/download/Singing_Forest-6930/MWD_-_06_-_06_mwd-be_in.mp3"
+                />
+              </section>
+              <section class="songinfocontainer playlistpart">
+                <section>
+                  <article>Fat bottomed girl</article>
+                </section>
+                <section>
+                  <article class="smalltext">Queen</article>
+                </section>
+              </section>
+              <section>
+                <article><i class="fas fa-play-circle"></i></article>
+              </section>
+            </section>
+            <!-- Här är en låt i spellistan -->
+            <section class="columncontainer hovercontainer changeSongContainer">
+              <section>
+                <img
+                  class="playlistimage"
+                  src="http://images.genius.com/bdca8351217d7f534528889415cefda8.1000x1000x1.jpg"
+                  data-songurl="https://archive.org/download/Singing_Forest-6930/MWD_-_02_-_Elephant.mp3"
+                />
+              </section>
+              <section class="songinfocontainer playlistpart">
+                <section>
+                  <article>Brand new hate</article>
+                </section>
+                <section>
+                  <article class="smalltext">Backyard babies</article>
+                </section>
+              </section>
+              <section>
+                <article><i class="fas fa-play-circle"></i></article>
+              </section>
+            </section>
+            <!-- Här är en låt i spellistan -->
+            <section class="columncontainer hovercontainer changeSongContainer">
+              <section>
+                <img
+                  class="playlistimage"
+                  src="https://img.cdandlp.com/2017/07/imgL/118876099.jpg"
+                  data-songurl="https://archive.org/download/Singing_Forest-6930/MWD_-_08_-_Slow_Surfer.mp3"
+                />
+              </section>
+              <section class="songinfocontainer playlistpart">
+                <section>
+                  <article>Still got the blues</article>
+                </section>
+                <section>
+                  <article class="smalltext">Gary Moore</article>
+                </section>
+              </section>
+              <section>
+                <article><i class="fas fa-play-circle"></i></article>
+              </section>
+            </section>
+          </section>
+          <!-- Slut på spellistan -->
+          <!-- Här kommer själva spelaren -->
+          <section class="mainpart columncontainer">
+            <!-- Första raden i spelaren, albumbild på låten som spelas just nu -->
+            <section
+              class="playedimagecontainer"
+              data-songurl="https://archive.org/download/Singing_Forest-6930/MWD_-_06_-_06_mwd-be_in.mp3"
+            ></section>
+            <!-- Andra raden, information on artist/låt -->
+            <section class="columncontainer">
+              <section class="hovercontainer">
+                <article><i class="fas fa-plus-circle"></i></article>
+              </section>
+              <section class="songinfocontainer">
+                <section>
+                  <article id="songTitle">Fat bottomed girl</article>
+                </section>
+                <section>
+                  <article class="smalltext" id="songArtist">Queen</article>
+                </section>
+              </section>
+              <section class="hovercontainer">
+                <article><i class="fas fa-heart"></i></article>
+              </section>
+            </section>
+            <!-- Tredje raden, tid och progress bar för låten som spelas -->
+            <section class="columncontainer">
+              <section>
+                <article class="smalltext" id="currentTime">0:00</article>
+              </section>
+              <section class="flexed hovercontainer">
+                <article class="meter">
+                  <input type="range" id="seek" value="0" max="" />
+                </article>
+              </section>
+              <section>
+                <article class="smalltext" id="songDuration">-</article>
+              </section>
+            </section>
+            <!-- Sista raden, spelarkontroller -->
+            <section class="columncontainer">
+              <section class="hovercontainer">
+                <i class="fas fa-sync-alt"></i>
+              </section>
+              <section class="buttoncontainer">
+                <i class="fas fa-backward hovercontainer"></i>
+                <i class="fas fa-play-circle hovercontainer" id="startSong"></i>
+                <i class="fas fa-pause-circle hovercontainer" id="stopSong"></i>
+                <i class="fas fa-forward hovercontainer"></i>
+              </section>
+              <section class="hovercontainer">
+                <i class="fas fa-random"></i>
+              </section>
+            </section>
+          </section>
+          <!-- Slut på spelaren -->
+        </section>
+      </section>
+    </section>
+    <script src="script/mplayer.js"></script>
+  </body>
+</html>
