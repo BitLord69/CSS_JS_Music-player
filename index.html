@@ -18,7 +18,7 @@
       src="https://kit.fontawesome.com/7aeeac2161.js"
       crossorigin="anonymous"
     ></script>
-    <title>Musikspelare</title>
+    <title>Musikspelare D-lyx</title>
   </head>
   <body>
     <br /><br /><br /><br />
@@ -44,13 +44,13 @@
         <section class="flexed">
           <!-- Spellistan börjar här -->
           <section id="playlist" class="mainpart columncontainer playlistpart">
-            <!-- Här är en låt i spellistan -->
-            <section class="columncontainer hovercontainer changeSongContainer">
+            <!-- Här är låt 1 i spellistan -->
+            <section class="columncontainer hovercontainer playlistItem" id="1">
               <section>
                 <img
                   class="playlistimage"
                   src="https://www.musicnotes.com/now/wp-content/uploads/the-miracle-queen.jpg"
-                  data-songurl="https://archive.org/download/Singing_Forest-6930/MWD_-_06_-_06_mwd-be_in.mp3"
+                  data-songurl="https://archive.org/download/Welcome_Aboard-5483/Tom_Caruana_-_07_-_Get_It_Off_Your_Chest.mp3"
                 />
               </section>
               <section class="songinfocontainer playlistpart">
@@ -65,13 +65,13 @@
                 <article><i class="fas fa-play-circle"></i></article>
               </section>
             </section>
-            <!-- Här är en låt i spellistan -->
-            <section class="columncontainer hovercontainer changeSongContainer">
+            <!-- Här är låt 2  i spellistan -->
+            <section class="columncontainer hovercontainer playlistItem" id="2">
               <section>
                 <img
                   class="playlistimage"
                   src="http://images.genius.com/bdca8351217d7f534528889415cefda8.1000x1000x1.jpg"
-                  data-songurl="https://archive.org/download/Singing_Forest-6930/MWD_-_02_-_Elephant.mp3"
+                  data-songurl="https://archive.org/download/Wiggle_1236-13478/Dr_Wylie_-_10_-_Little_Boxes.mp3"
                 />
               </section>
               <section class="songinfocontainer playlistpart">
@@ -86,13 +86,13 @@
                 <article><i class="fas fa-play-circle"></i></article>
               </section>
             </section>
-            <!-- Här är en låt i spellistan -->
-            <section class="columncontainer hovercontainer changeSongContainer">
+            <!-- Här är låt 3 i spellistan -->
+            <section class="columncontainer hovercontainer playlistItem" id="3">
               <section>
                 <img
                   class="playlistimage"
                   src="https://img.cdandlp.com/2017/07/imgL/118876099.jpg"
-                  data-songurl="https://archive.org/download/Singing_Forest-6930/MWD_-_08_-_Slow_Surfer.mp3"
+                  data-songurl="https://archive.org/download/Big_Buck_Bunny-13302/Jan_Morgenstern_-_02_-_All_Ears.mp3"
                 />
               </section>
               <section class="songinfocontainer playlistpart">
@@ -112,10 +112,7 @@
           <!-- Här kommer själva spelaren -->
           <section class="mainpart columncontainer">
             <!-- Första raden i spelaren, albumbild på låten som spelas just nu -->
-            <section
-              class="playedimagecontainer"
-              data-songurl="https://archive.org/download/Singing_Forest-6930/MWD_-_06_-_06_mwd-be_in.mp3"
-            ></section>
+            <section class="playedimagecontainer" data-songurl=""></section>
             <!-- Andra raden, information on artist/låt -->
             <section class="columncontainer">
               <section class="hovercontainer">
@@ -123,14 +120,14 @@
               </section>
               <section class="songinfocontainer">
                 <section>
-                  <article id="songTitle">Fat bottomed girl</article>
+                  <article id="songTitle"></article>
                 </section>
                 <section>
-                  <article class="smalltext" id="songArtist">Queen</article>
+                  <article class="smalltext" id="songArtist"></article>
                 </section>
               </section>
               <section class="hovercontainer">
-                <article><i class="fas fa-heart"></i></article>
+                <article><i class="far fa-heart"></i></article>
               </section>
             </section>
             <!-- Tredje raden, tid och progress bar för låten som spelas -->
@@ -153,10 +150,10 @@
                 <i class="fas fa-sync-alt"></i>
               </section>
               <section class="buttoncontainer">
-                <i class="fas fa-backward hovercontainer"></i>
+                <i class="fas fa-backward hovercontainer" id="prevSong"></i>
                 <i class="fas fa-play-circle hovercontainer" id="startSong"></i>
                 <i class="fas fa-pause-circle hovercontainer" id="stopSong"></i>
-                <i class="fas fa-forward hovercontainer"></i>
+                <i class="fas fa-forward hovercontainer" id="nextSong"></i>
               </section>
               <section class="hovercontainer">
                 <i class="fas fa-random"></i>
