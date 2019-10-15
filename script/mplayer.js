@@ -1,3 +1,14 @@
+// The following function is "borrowed" from Stack Overflow
+function eventFire(el, etype) {
+  if (el.fireEvent) {
+    el.fireEvent("on" + etype);
+  } else {
+    var evObj = document.createEvent("Events");
+    evObj.initEvent(etype, true, false);
+    el.dispatchEvent(evObj);
+  }
+}
+
 function shrink() {
   document.getElementById("playlist").style.display = "none";
   document.getElementById("expandIcon").className = "fas fa-angle-left";
@@ -11,7 +22,6 @@ function expand() {
 }
 
 function changeSong(event) {
-  event.preventDefault();
   var nodes = event.target
     .closest(".columncontainer")
     .getElementsByTagName("article");
@@ -66,14 +76,11 @@ function updateTimers() {
     seek.attr("value", player.currentTime);
     $("#songDuration").text(formatTime(new Date(player.duration * 1000)));
     $("#currentTime").text(formatTime(new Date(player.currentTime * 1000)));
-
-    //    console.log("updateTimers: " + seek.attr("value"));
-  }
+  } // if !isNan...
 } // updateTimers
 
 // Called when the user slides the bar to change song position
 function seekbarSlide() {
-  console.log("seekbarSlide! " + $(this).val());
   player.currentTime = $(this).val();
   seek.attr("max", player.duration);
   $("#currentTime").text(formatTime(new Date($(this).val() * 1000)));
@@ -81,10 +88,18 @@ function seekbarSlide() {
 
 // Gets called when the song has ended
 function songEnd() {
-  player.currentTime = 0;
-  seek.attr("value", 0);
-  $("#stopSong").css("display", "none");
-  $("#startSong").css("display", "block");
+  // Is there another song to play?
+  // If so, increase the current song counter and fire a click-event on that playlist item
+  if (currentSong < playListLength) {
+    eventFire($(".playlistItem")[currentSong++], "click");
+  } // if currentSong...
+  else {
+    // Nope, there was no more songs in the list, reset things
+    player.currentTime = 0;
+    seek.attr("value", 0);
+    $("#stopSong").css("display", "none");
+    $("#startSong").css("display", "block");
+  }
 }
 
 function init() {
@@ -93,13 +108,15 @@ function init() {
 
   $("#stopSong").on("click", pauseClip);
   $("#startSong").on("click", playClip);
-  $(".changeSongContainer").on("click", changeSong);
+  $(".playlistItem").on("click", changeSong);
 
   $(seek).on("input", seekbarSlide);
 } // init
 
-// Set up global vatiables
+// Set up global variables
 let seek = $("#seek");
 let player = new Audio();
+let playListLength = $(".playlistItem").length;
+let currentSong = 1;
 
 $(init());
