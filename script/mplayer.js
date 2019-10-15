@@ -11,6 +11,7 @@ function expand() {
 }
 
 function changeSong(event) {
+  event.preventDefault();
   var nodes = event.target
     .closest(".columncontainer")
     .getElementsByTagName("article");
@@ -34,28 +35,26 @@ function changeSong(event) {
 function playClip() {
   $("#startSong").css("display", "none");
   $("#stopSong").css("display", "block");
+  seek.attr("value", 0);
 
   if (!player.paused || player.currentTime === 0) {
     player.src = $(".playedimagecontainer").attr("data-songurl");
-    $("#seek").attr("value", 0);
-    $("#seek").attr("max", player.duration);
+    seek.attr("max", player.duration);
   }
 
   player.play();
 } // playClip
 
-function stopClip() {
+function pauseClip(event) {
   player.pause();
   $("#startSong").css("display", "block");
   $("#stopSong").css("display", "none");
-} // stopClip
+} // pauseClip
 
 function formatTime(dateObject) {
-  var timeString = "";
-  timeString = dateObject.getMinutes();
+  var timeString = dateObject.getMinutes() + ":";
   timeString =
     timeString +
-    ":" +
     (dateObject.getSeconds() < 10 ? "0" : "") +
     dateObject.getSeconds();
   return timeString;
@@ -63,36 +62,44 @@ function formatTime(dateObject) {
 
 function updateTimers() {
   if (!isNaN(player.duration)) {
-    $("#seek").attr("max", player.duration);
-    $("#seek").attr("value", parseInt(player.currentTime, 10));
+    seek.attr("max", player.duration);
+    seek.attr("value", player.currentTime);
     $("#songDuration").text(formatTime(new Date(player.duration * 1000)));
     $("#currentTime").text(formatTime(new Date(player.currentTime * 1000)));
 
-    console.log("updateTimers: " + $("#seek").attr("value"));
+    //    console.log("updateTimers: " + seek.attr("value"));
   }
 } // updateTimers
 
+// Called when the user slides the bar to change song position
 function seekbarSlide() {
-  console.log("#seek:input");
+  console.log("seekbarSlide! " + $(this).val());
+  player.currentTime = $(this).val();
+  seek.attr("max", player.duration);
   $("#currentTime").text(formatTime(new Date($(this).val() * 1000)));
 }
 
-function seekbarChange() {
-  console.log("#seek:change");
-  player.currentTime = $(this).val();
+// Gets called when the song has ended
+function songEnd() {
+  player.currentTime = 0;
+  seek.attr("value", 0);
+  $("#stopSong").css("display", "none");
+  $("#startSong").css("display", "block");
 }
 
 function init() {
-  $("#stopSong").on("click", stopClip);
+  $(player).on("ended", songEnd);
+  $(player).on("timeupdate", updateTimers);
+
+  $("#stopSong").on("click", pauseClip);
   $("#startSong").on("click", playClip);
   $(".changeSongContainer").on("click", changeSong);
-  $(".playlistpart > .fa-play-circle").on("click", playClip);
 
-  // player.addEventListener("timeupdate", updateTimers);
-  $(player).on("timeupdate", updateTimers);
-  $("#seek").on("input", seekbarSlide);
-  $("#seek").bind("change", seekbarChange);
+  $(seek).on("input", seekbarSlide);
 } // init
 
+// Set up global vatiables
+let seek = $("#seek");
 let player = new Audio();
+
 $(init());
