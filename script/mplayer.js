@@ -26,6 +26,10 @@ function changeSong(event) {
     .closest(".columncontainer")
     .getElementsByTagName("article");
 
+  $($(".playlistItem")[currentSong - 1]).removeClass("currentlyPlaying");
+  currentSong = this.id;
+  $($(".playlistItem")[currentSong - 1]).addClass("currentlyPlaying");
+
   $("#songTitle").text(nodes[0].innerHTML);
   $("#songArtist").text(nodes[1].innerHTML);
 
@@ -50,7 +54,7 @@ function playClip() {
   if (!player.paused || player.currentTime === 0) {
     player.src = $(".playedimagecontainer").attr("data-songurl");
     seek.attr("max", player.duration);
-  }
+  } // if !player...
 
   player.play();
 } // playClip
@@ -84,33 +88,62 @@ function seekbarSlide() {
   player.currentTime = $(this).val();
   seek.attr("max", player.duration);
   $("#currentTime").text(formatTime(new Date($(this).val() * 1000)));
-}
+} // seekbarSlide
 
 // Gets called when the song has ended
 function songEnd() {
+  player.currentTime = 0;
+  seek.attr("value", 0);
+
   // Is there another song to play?
-  // If so, increase the current song counter and fire a click-event on that playlist item
   if (currentSong < playListLength) {
-    eventFire($(".playlistItem")[currentSong++], "click");
+    nextSong();
   } // if currentSong...
   else {
     // Nope, there was no more songs in the list, reset things
-    player.currentTime = 0;
-    seek.attr("value", 0);
     $("#stopSong").css("display", "none");
     $("#startSong").css("display", "block");
+  } // else
+} // songEnd
+
+function prevSong() {
+  // Are we close to the beginning of the song, and there is a previous song?
+  // If so, fire the click to play it
+  if (player.currentTime < 3 && currentSong > 1) {
+    $($(".playlistItem")[currentSong - 1]).removeClass("currentlyPlaying");
+    eventFire($(".playlistItem")[--currentSong - 1], "click");
+  } else {
+    player.currentTime = 0;
+    seek.attr("value", 0);
+    updateTimers();
+  } // else...
+} // prevSong
+
+function nextSong() {
+  if (currentSong < playListLength) {
+    $($(".playlistItem")[currentSong - 1]).removeClass("currentlyPlaying");
+    eventFire($(".playlistItem")[currentSong++], "click");
   }
-}
+} // nextSong
 
 function init() {
   $(player).on("ended", songEnd);
   $(player).on("timeupdate", updateTimers);
 
-  $("#stopSong").on("click", pauseClip);
+  $("#prevSong").on("click", prevSong);
+  $("#nextSong").on("click", nextSong);
   $("#startSong").on("click", playClip);
+  $("#stopSong").on("click", pauseClip);
   $(".playlistItem").on("click", changeSong);
 
   $(seek).on("input", seekbarSlide);
+
+  // Make sure we load the right data into the currently played part of the player
+  eventFire($(".playlistItem")[currentSong - 1], "click");
+
+  // Make sure the two player control buttons' visibility is properly set
+  $("#startSong").css("display", "block");
+  $("#stopSong").css("display", "none");
 } // init
 
 // Set up global variables
