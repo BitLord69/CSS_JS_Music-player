@@ -9,6 +9,21 @@ function eventFire(el, callFunction) {
   } // else
 } // eventFire
 
+// Function to show a custom modal dialog box
+function showDialog(message, okcallback, cancelcallback) {
+  $(".modal").show();
+  $(".modal-content p").text(message);
+  $(".modalOK").unbind("click");
+  $(".modalOK").click(okcallback);
+  $(".modalAbort").unbind("click");
+  $(".modalAbort").click(cancelcallback);
+} // showDialog
+
+// Funtion to hide the custom modal box
+function hideDialog() {
+  $(".modal").hide();
+} // hideDialog
+
 function shrink() {
   document.getElementById("playlist").style.display = "none";
   document.getElementById("expandIcon").className = "fas fa-angle-left";
@@ -43,6 +58,7 @@ function changeSong(event) {
     $(nodes[0]).attr("data-songurl")
   );
 
+  // Create a new custom event that tells playSong that a new song should be loaded
   e = new CustomEvent("MyEvent", {
     detail: { newSong: true },
     bubbles: false,
@@ -66,23 +82,57 @@ function playSong(event) {
     seek.attr("max", player.duration);
   } // if event.type...
 
+  // Not a new song, start the playing counter anew
+  if (
+    (event.type === "MyEvent" && !event.detail.newSong) ||
+    (event.type != "MyEvent" && !event.data.newSong)
+  ) {
+    startPlaybackTime = Date.now();
+  }
+
   player.play();
 } // playSong
 
 function pauseSong(event) {
-  player.pause();
   $("#startSong").css("display", "block");
   $("#stopSong").css("display", "none");
+  player.pause();
+
+  startPlaybackTime = Date.now();
 } // pauseSong
 
 function formatTime(dateObject) {
-  var timeString = dateObject.getMinutes() + ":";
-  timeString =
-    timeString +
-    (dateObject.getSeconds() < 10 ? "0" : "") +
-    dateObject.getSeconds();
+  var timeString =
+    dateObject.getMinutes() +
+    ":" +
+    dateObject
+      .getSeconds()
+      .toString()
+      .padStart(2, "0");
   return timeString;
 } // formatTime
+
+function continueDlg() {
+  function ok() {
+    e = new CustomEvent("MyEvent", {
+      detail: { newSong: false },
+      bubbles: false,
+      cancelable: true
+    });
+    playSong(e);
+    hideDialog();
+  } // ok
+
+  function cancel() {
+    hideDialog();
+  } // cancel
+
+  showDialog(
+    "You have been playing for a long while now - still alive?",
+    ok,
+    cancel
+  );
+} // continueDlg
 
 function updateTimers() {
   if (!isNaN(player.duration)) {
@@ -90,6 +140,11 @@ function updateTimers() {
     seek.attr("value", player.currentTime);
     $("#songDuration").text(formatTime(new Date(player.duration * 1000)));
     $("#currentTime").text(formatTime(new Date(player.currentTime * 1000)));
+
+    if (Date.now() - startPlaybackTime > playLimitInMillis) {
+      pauseSong();
+      continueDlg();
+    } // if Date.now...
   } // if !isNan...
 } // updateTimers
 
@@ -133,7 +188,7 @@ function nextSong() {
   if (currentSong < playListLength) {
     $($(".playlistItem")[currentSong - 1]).removeClass("currentlyPlaying");
     eventFire($(".playlistItem")[currentSong++], "click");
-  }
+  } // if currentSong...
 } // nextSong
 
 function loopSong() {
@@ -159,7 +214,7 @@ function init() {
 
   $(seek).on("input", seekbarSlide);
 
-  // Make sure we load the right data into the currently played part of the player
+  // Make sure we load the right data into the 'currently played' part of the player
   eventFire($(".playlistItem")[currentSong - 1], "click");
 
   // Make sure the two player control buttons' visibility is properly set
@@ -168,11 +223,13 @@ function init() {
 } // init
 
 // Set up global variables
-let currentSong = 1;
-let seek = $("#seek");
-let player = new Audio();
-let loopColorHighlit = "lime";
-let loopColor = $("#loopSong").css("color");
-let playListLength = $(".playlistItem").length;
+let currentSong = 1; // Yup, we should start on the first song
+let seek = $("#seek"); // Ease-of-acces variable for the seeker bar
+let player = new Audio(); // Create the actual audio obejct
+let playLimitInMillis = 10000; // How long to play before the player asks for your presence
+let loopColorHighlit = "lime"; // Set the highlight color for the loop button
+let startPlaybackTime = Date.now(); // Create the played time variable
+let loopColor = $("#loopSong").css("color"); // Save the original color of hte loop button
+let playListLength = $(".playlistItem").length; // Contains the number of songs in the playlist
 
 $(init());

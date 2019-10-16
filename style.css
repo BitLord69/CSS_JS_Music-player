@@ -150,6 +150,7 @@ input::-webkit-slider-thumb {
 
 .hovercontainer:hover * {
   color: yellow;
+  transition: background-color 0.5s;
 }
 
 .currentlyPlaying {
@@ -179,4 +180,73 @@ section :not(.columncontainer):not(.imagecontainer):not(.buttoncontainer) {
 section
   :not(.columncontainer):nth-child(2):not(.imagecontainer):not(article):not(i) {
   flex: 8;
+}
+
+/* The Modal (background) */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  border-radius: 1vw;
+  left: 0;
+  top: 0;
+  --Width: 30vw;
+  --Height: 11vw;
+  overflow: auto;
+  width: var(--Width);
+  height: var(--Height);
+  min-width: 380px;
+  min-height: 140px;
+  border: 1px solid black;
+  margin-left: calc(calc(100% - var(--Width)) / 2);
+  margin-top: calc(calc(100vw - var(--Height)) / 8);
+  background-image: linear-gradient(
+    to right top,
+    purple,
+    rgba(153, 181, 233, 0.9),
+    rgba(0, 17, 255, 0.9)
+  );
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  color: black;
+  margin: 5% auto;
+  padding: 10px;
+  border: 1px solid #888;
+  width: 95%;
+  border-radius: 1vw;
+  font-size: 120%;
+  text-align: center;
+}
+
+.modalOK {
+  margin-left: 45%;
+}
+
+/* The close Button */
+.modalAbort {
+  float: right;
+  line-height: 16px;
+}
+
+.modalOK,
+.modalAbort {
+  padding: 3px;
+  font-size: 28px;
+  font-weight: bold;
+  color: whitesmoke;
+}
+
+.modalAbort:hover,
+.modalAbort:focus,
+.modalOK:hover,
+.modalOK:focus {
+  color: darkgray;
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid lightgray;
+  border-radius: 0.75vw;
+  transition: color 0.3s;
 }
