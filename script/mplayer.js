@@ -1,25 +1,27 @@
 // The following function is "borrowed" from Stack Overflow
-function eventFire(el, etype) {
+function eventFire(el, callFunction) {
   if (el.fireEvent) {
-    el.fireEvent("on" + etype);
+    el.fireEvent("on" + callFunction);
+    console.log("evenFire - e1.fireEvent");
   } else {
+    console.log("evenFire - else");
     var evObj = document.createEvent("Events");
-    evObj.initEvent(etype, true, false);
+    evObj.initEvent(callFunction, true, false);
     el.dispatchEvent(evObj);
   }
-}
+} // eventFire
 
 function shrink() {
   document.getElementById("playlist").style.display = "none";
   document.getElementById("expandIcon").className = "fas fa-angle-left";
   document.getElementById("expandbtn").setAttribute("onclick", "expand()");
-}
+} // shrink
 
 function expand() {
   document.getElementById("playlist").style.display = "block";
   document.getElementById("expandIcon").className = "fas fa-angle-right";
   document.getElementById("expandbtn").setAttribute("onclick", "shrink()");
-}
+} // expand
 
 function changeSong(event) {
   var nodes = event.target
@@ -43,18 +45,32 @@ function changeSong(event) {
     $(nodes[0]).attr("data-songurl")
   );
 
-  playClip();
+  e = new CustomEvent("MyEvent", {
+    detail: { newSong: true },
+    bubbles: false,
+    cancelable: true
+  });
+  console.log("I changeSong, before playClip... " + e + " " + e.data);
+  playClip(e);
 } // changeSong
 
-function playClip() {
+function playClip(event) {
   $("#startSong").css("display", "none");
   $("#stopSong").css("display", "block");
   seek.attr("value", 0);
 
-  if (!player.paused || player.currentTime === 0) {
+  if (event.type === "MyEvent") console.log(event.detail);
+  else console.log(event.data);
+
+  //  if (!player.paused || player.currentTime === 0) {
+  if (
+    (event.type === "MyEvent" && event.detail.newSong) ||
+    (event.type != "MyEvent" && event.data.newSong)
+  ) {
     player.src = $(".playedimagecontainer").attr("data-songurl");
     seek.attr("max", player.duration);
-  } // if !player...
+  }
+  //  } // if !player...
 
   player.play();
 } // playClip
@@ -130,11 +146,11 @@ function init() {
   $(player).on("ended", songEnd);
   $(player).on("timeupdate", updateTimers);
 
-  $("#prevSong").on("click", prevSong);
-  $("#nextSong").on("click", nextSong);
-  $("#startSong").on("click", playClip);
-  $("#stopSong").on("click", pauseClip);
-  $(".playlistItem").on("click", changeSong);
+  $("#prevSong").click(prevSong);
+  $("#nextSong").click(nextSong);
+  $("#stopSong").click(pauseClip);
+  $(".playlistItem").click(changeSong);
+  $("#startSong").click({ newSong: false }, playClip);
 
   $(seek).on("input", seekbarSlide);
 
