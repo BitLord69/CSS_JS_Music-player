@@ -31,7 +31,6 @@ button {
     rgb(0, 17, 255),
     purple
   );
-  /* border: 3px solid purple; */
 }
 
 .mainpart {
@@ -39,7 +38,6 @@ button {
   min-height: 40vh;
   align-items: center;
   justify-content: space-between;
-  /* border: 10px solid green; */
 }
 
 .columns,
@@ -58,7 +56,6 @@ button {
 .columncontainer {
   display: flex;
   align-items: center;
-  /* border: 1px solid pink; */
 }
 
 .playlistimage {
@@ -124,7 +121,6 @@ input::-webkit-slider-thumb {
   padding: 0 30px;
   align-items: center;
   justify-content: space-around;
-  /* border: 3px dashed purple; */
 }
 
 .songinfocontainer {
@@ -136,7 +132,6 @@ input::-webkit-slider-thumb {
 .smalltext {
   font-size: 70%;
   color: lightgray;
-  /* border: 10px solid green; */
 }
 
 .playlistpart {
@@ -147,7 +142,6 @@ input::-webkit-slider-thumb {
 
 .hovercontainer {
   border-radius: 0.5vw;
-  /* border: 1px solid gray; */
 }
 
 .hovercontainer:hover {
@@ -170,11 +164,9 @@ input::-webkit-slider-thumb {
 section :not(.columncontainer):not(.imagecontainer):not(.buttoncontainer) {
   flex: 1;
   text-align: center;
-  /* border: 1px dashed red; */
 }
 
 section
   :not(.columncontainer):nth-child(2):not(.imagecontainer):not(article):not(i) {
   flex: 8;
-  /* border: 5px solid yellow; */
 }

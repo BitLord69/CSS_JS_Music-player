@@ -66,8 +66,6 @@ function updateTimers() {
     seek.attr("value", player.currentTime);
     $("#songDuration").text(formatTime(new Date(player.duration * 1000)));
     $("#currentTime").text(formatTime(new Date(player.currentTime * 1000)));
-
-    //    console.log("updateTimers: " + seek.attr("value"));
   }
 } // updateTimers
 
@@ -98,7 +96,7 @@ function init() {
   $(seek).on("input", seekbarSlide);
 } // init
 
-// Set up global vatiables
+// Set up global variables
 let seek = $("#seek");
 let player = new Audio();
 
