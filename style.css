@@ -125,8 +125,8 @@ input::-webkit-slider-thumb {
 
 .songinfocontainer {
   display: flex;
-  flex-direction: column;
   align-items: center;
+  flex-direction: column;
 }
 
 .smalltext {
@@ -135,9 +135,9 @@ input::-webkit-slider-thumb {
 }
 
 .playlistpart {
+  color: lightgray;
   justify-content: start;
   align-items: flex-start;
-  color: lightgray;
 }
 
 .hovercontainer {
@@ -152,15 +152,25 @@ input::-webkit-slider-thumb {
   color: yellow;
 }
 
+.currentlyPlaying {
+  color: lightsteelblue;
+  background-image: linear-gradient(
+    to right top,
+    purple,
+    rgba(153, 181, 233, 0.5),
+    rgba(0, 17, 255, 0.5)
+  );
+}
+
 #startSong,
 #stopSong {
   font-size: 250%;
 }
 
-#stopSong {
-  display: none;
+#prevSong,
+#nextSong {
+  font-size: 150%;
 }
-
 section :not(.columncontainer):not(.imagecontainer):not(.buttoncontainer) {
   flex: 1;
   text-align: center;
