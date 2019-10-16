@@ -48,17 +48,16 @@ function changeSong(event) {
     bubbles: false,
     cancelable: true
   });
-  playClip(e);
+  playSong(e);
 } // changeSong
 
-function playClip(event) {
+function playSong(event) {
   $("#startSong").css("display", "none");
   $("#stopSong").css("display", "block");
   seek.attr("value", 0);
 
-  if (event.type === "MyEvent") console.log(event.detail);
-  else console.log(event.data);
-
+  // Check the extra event data, ie if it's a new song or not
+  // Since a custom event's data field is named differently than a built in's, check this
   if (
     (event.type === "MyEvent" && event.detail.newSong) ||
     (event.type != "MyEvent" && event.data.newSong)
@@ -68,13 +67,13 @@ function playClip(event) {
   } // if event.type...
 
   player.play();
-} // playClip
+} // playSong
 
-function pauseClip(event) {
+function pauseSong(event) {
   player.pause();
   $("#startSong").css("display", "block");
   $("#stopSong").css("display", "none");
-} // pauseClip
+} // pauseSong
 
 function formatTime(dateObject) {
   var timeString = dateObject.getMinutes() + ":";
@@ -137,15 +136,26 @@ function nextSong() {
   }
 } // nextSong
 
+function loopSong() {
+  if (player.loop) {
+    player.loop = false;
+    $("#loopSong").css("color", loopColor);
+  } else {
+    player.loop = true;
+    $("#loopSong").css("color", loopColorHighlit);
+  } // else
+} // loopSong
+
 function init() {
   $(player).on("ended", songEnd);
   $(player).on("timeupdate", updateTimers);
 
+  $("#loopSong").click(loopSong);
   $("#prevSong").click(prevSong);
   $("#nextSong").click(nextSong);
-  $("#stopSong").click(pauseClip);
+  $("#stopSong").click(pauseSong);
   $(".playlistItem").click(changeSong);
-  $("#startSong").click({ newSong: false }, playClip);
+  $("#startSong").click({ newSong: false }, playSong);
 
   $(seek).on("input", seekbarSlide);
 
@@ -158,9 +168,11 @@ function init() {
 } // init
 
 // Set up global variables
+let currentSong = 1;
 let seek = $("#seek");
 let player = new Audio();
+let loopColorHighlit = "lime";
+let loopColor = $("#loopSong").css("color");
 let playListLength = $(".playlistItem").length;
-let currentSong = 1;
 
 $(init());
