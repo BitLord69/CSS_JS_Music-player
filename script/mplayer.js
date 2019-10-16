@@ -2,13 +2,11 @@
 function eventFire(el, callFunction) {
   if (el.fireEvent) {
     el.fireEvent("on" + callFunction);
-    console.log("evenFire - e1.fireEvent");
   } else {
-    console.log("evenFire - else");
     var evObj = document.createEvent("Events");
     evObj.initEvent(callFunction, true, false);
     el.dispatchEvent(evObj);
-  }
+  } // else
 } // eventFire
 
 function shrink() {
@@ -50,7 +48,6 @@ function changeSong(event) {
     bubbles: false,
     cancelable: true
   });
-  console.log("I changeSong, before playClip... " + e + " " + e.data);
   playClip(e);
 } // changeSong
 
@@ -62,15 +59,13 @@ function playClip(event) {
   if (event.type === "MyEvent") console.log(event.detail);
   else console.log(event.data);
 
-  //  if (!player.paused || player.currentTime === 0) {
   if (
     (event.type === "MyEvent" && event.detail.newSong) ||
     (event.type != "MyEvent" && event.data.newSong)
   ) {
     player.src = $(".playedimagecontainer").attr("data-songurl");
     seek.attr("max", player.duration);
-  }
-  //  } // if !player...
+  } // if event.type...
 
   player.play();
 } // playClip
