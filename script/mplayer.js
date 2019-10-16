@@ -43,6 +43,7 @@ function changeSong(event) {
     $(nodes[0]).attr("data-songurl")
   );
 
+  // Create a new custom event that tells playSong that a new song shoudl be loaded
   e = new CustomEvent("MyEvent", {
     detail: { newSong: true },
     bubbles: false,
@@ -66,6 +67,14 @@ function playSong(event) {
     seek.attr("max", player.duration);
   } // if event.type...
 
+  // Not a new song, start the playing counter anew
+  if (
+    (event.type === "MyEvent" && !event.detail.newSong) ||
+    (event.type != "MyEvent" && !event.data.newSong)
+  ) {
+    startPlaybackTime = Date.now();
+  }
+
   player.play();
 } // playSong
 
@@ -73,6 +82,8 @@ function pauseSong(event) {
   player.pause();
   $("#startSong").css("display", "block");
   $("#stopSong").css("display", "none");
+
+  startPlaybackTime = Date.now();
 } // pauseSong
 
 function formatTime(dateObject) {
@@ -90,6 +101,20 @@ function updateTimers() {
     seek.attr("value", player.currentTime);
     $("#songDuration").text(formatTime(new Date(player.duration * 1000)));
     $("#currentTime").text(formatTime(new Date(player.currentTime * 1000)));
+
+    if (Date.now() - startPlaybackTime > playLimitInMillis) {
+      pauseSong();
+      if (
+        confirm("You have been playing for a long while now - still alive?")
+      ) {
+        e = new CustomEvent("MyEvent", {
+          detail: { newSong: false },
+          bubbles: false,
+          cancelable: true
+        });
+        playSong(e);
+      } // else, yes, the user wants to play on
+    } // if Date.now...
   } // if !isNan...
 } // updateTimers
 
@@ -133,7 +158,7 @@ function nextSong() {
   if (currentSong < playListLength) {
     $($(".playlistItem")[currentSong - 1]).removeClass("currentlyPlaying");
     eventFire($(".playlistItem")[currentSong++], "click");
-  }
+  } // if currentSong...
 } // nextSong
 
 function loopSong() {
@@ -159,7 +184,7 @@ function init() {
 
   $(seek).on("input", seekbarSlide);
 
-  // Make sure we load the right data into the currently played part of the player
+  // Make sure we load the right data into the 'currently played' part of the player
   eventFire($(".playlistItem")[currentSong - 1], "click");
 
   // Make sure the two player control buttons' visibility is properly set
@@ -168,11 +193,13 @@ function init() {
 } // init
 
 // Set up global variables
-let currentSong = 1;
-let seek = $("#seek");
-let player = new Audio();
-let loopColorHighlit = "lime";
-let loopColor = $("#loopSong").css("color");
-let playListLength = $(".playlistItem").length;
+let currentSong = 1; // Yup, we shoudl start on the first song
+let seek = $("#seek"); // Ease-of-acces variable for the seeker bar
+let player = new Audio(); // Create the actual audio obejct
+let playLimitInMillis = 10000; // How long to play before the player asks for your presence
+let loopColorHighlit = "lime"; // Set the highlight color for the loop button
+let startPlaybackTime = Date.now(); // Create the played time variable
+let loopColor = $("#loopSong").css("color"); // Save the original color of hte loop button
+let playListLength = $(".playlistItem").length; // Check how ,many songs are in the playlist
 
 $(init());
