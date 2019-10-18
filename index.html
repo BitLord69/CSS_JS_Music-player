@@ -8,6 +8,10 @@
       href="https://fonts.googleapis.com/css?family=Montserrat&display=swap"
       rel="stylesheet"
     />
+    <link
+      href="https://fonts.googleapis.com/css?family=Righteous&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="normalize.css" />
     <link rel="stylesheet" href="style.css" />
     <script
@@ -25,19 +29,23 @@
     <section class="columns">
       <section class="maincolumns">
         <!-- Här ligger headern -->
-        <section class="columncontainer">
+        <section class="headerContainer">
           <section class="hovercontainer">
-            <article>
-              <button id="expandbtn" onclick="shrink()">
-                <i id="expandIcon" class="fas fa-angle-right"></i>
-              </button>
-            </article>
+          <article>
+            <button id="expandbtn" onclick="shrink()">
+              <i id="expandIcon" class="fas fa-angle-right"></i>
+            </button>
+          </article>
           </section>
-          <section>
+          <section class="headerTitle">
             <article>Playlist - bluesy</article>
           </section>
           <section class="hovercontainer">
-            <article><i class="fas fa-ellipsis-v"></i></article>
+          <article>
+            <button id="ellipsisBtn" onclick="showAddSongDialog()">
+              <i class="fas fa-ellipsis-v"></i>
+            </button>
+          </article>
           </section>
         </section>
         <!-- Yttre behållare som innehåller spellistan och spelarföntret -->
@@ -58,7 +66,7 @@
                   <article>Fat bottomed girl</article>
                 </section>
                 <section>
-                  <article class="smalltext">Queen</article>
+                  <article class="smalltext playlistpart">Queen</article>
                 </section>
               </section>
               <section>
@@ -79,7 +87,9 @@
                   <article>Brand new hate</article>
                 </section>
                 <section>
-                  <article class="smalltext">Backyard babies</article>
+                  <article class="smalltext playlistpart">
+                    Backyard babies
+                  </article>
                 </section>
               </section>
               <section>
@@ -100,7 +110,7 @@
                   <article>Still got the blues</article>
                 </section>
                 <section>
-                  <article class="smalltext">Gary Moore</article>
+                  <article class="smalltext playlistpart">Gary Moore</article>
                 </section>
               </section>
               <section>
@@ -166,15 +176,62 @@
     </section>
 
     <!-- Modal dialog istället för confirm -->
-    <div id="myConfirmDlg" class="modal columncontainer">
-      <span class="modalAbort">&times;</span>
+    <div id="myConfirmDlg" class="dialog columncontainer confirmDlg">
+      <span class="dialogCancel">&times;</span>
       <!-- Modal content -->
-      <div class="modal-content">
+      <div class="dialog-content">
         <p>Vill du verkligen....</p>
       </div>
-      <p><i class="fas fa-thumbs-up modalOK"></i></p>
+      <p><i class="fas fa-thumbs-up dialogOK"></i></p>
     </div>
     <!-- Slut på den modala dialogen -->
+
+    <!-- Inmatningsdialog för ny låt -->
+    <div class="dialog maincolumns addSongDlg">
+      <button class="dialogCancel">
+        &times;
+      </button>
+      <form action="" class="myForm">
+        <p>Låttitel:</p>
+        <input type="text" id="songName" value="" />
+
+        <p>Artist/grupp:</p>
+        <input type="text" id="artistName" value="" />
+
+        <p>URL till albumbild:</p>
+        <input type="url" id="songCoverURL" value="" />
+
+        <p>URL till låt:</p>
+        <input type="url" id="songURL" value="" />
+
+        <button type="submit" class="dialogOK">
+          <i class="far fa-save"></i>
+        </button>
+      </form>
+    </div>
+    <!-- Slut på dialogen -->
+
+    <!-- Mall för att skapa ett nytt objekt i spellistan -->
+    <section
+      class="columncontainer hovercontainer playlistItem"
+      id="songTemplate"
+    >
+      <section>
+        <img class="playlistimage" src="" data-songurl="" />
+      </section>
+      <section class="songinfocontainer playlistpart">
+        <section>
+          <article id="templateSongName"></article>
+        </section>
+        <section>
+          <article class="smalltext playlistpart" id="templateArtist"></article>
+        </section>
+      </section>
+      <section>
+        <article><i class="fas fa-play-circle"></i></article>
+      </section>
+    </section>
+    <!-- Slut på malldefinitionen -->
 
     <script src="script/mplayer.js"></script>
   </body>

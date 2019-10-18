@@ -6,7 +6,8 @@ body {
   color: white;
   font-size: 70%;
   align-items: center;
-  font-family: "Montserrat", sans-serif;
+  /* font-family: "Montserrat", sans-serif; */
+  font-family: "Righteous", cursive;
 }
 
 button {
@@ -14,7 +15,7 @@ button {
   outline: none;
   color: white;
   cursor: pointer;
-  font-size: 150%;
+  font-size: 170%;
   background-color: rgba(0, 0, 0, 0);
 }
 
@@ -34,7 +35,7 @@ button {
 }
 
 .mainpart {
-  min-width: 15vw;
+  min-width: 12vw;
   min-height: 40vh;
   align-items: center;
   justify-content: space-between;
@@ -58,6 +59,15 @@ button {
   align-items: center;
 }
 
+.headerContainer {
+  margin: auto;
+  display: flex;
+  min-width: 15vw;
+  padding: 5px 4px;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .playlistimage {
   padding: 2px;
   width: 2.5vw;
@@ -67,8 +77,8 @@ button {
 }
 
 .playedimagecontainer {
-  min-width: 16vw;
-  min-height: 16vh;
+  min-width: 11vw;
+  min-height: 11vh;
   background-size: contain;
   background-position: 50% 50%;
   background-repeat: no-repeat;
@@ -82,6 +92,10 @@ button {
   border-radius: 1vw;
   background-color: black;
   border: 1px solid green;
+}
+
+#songTemplate {
+  display: none;
 }
 
 input[type="range"] {
@@ -130,8 +144,12 @@ input::-webkit-slider-thumb {
 }
 
 .smalltext {
-  font-size: 70%;
+  font-size: 75%;
+  min-width: 3vw; /* 100px */
+  overflow: hidden;
   color: lightgray;
+  text-overflow: ellipsis;
+  text-align: left;
 }
 
 .playlistpart {
@@ -165,14 +183,15 @@ input::-webkit-slider-thumb {
 
 #startSong,
 #stopSong {
-  font-size: 250%;
+  font-size: 270%;
 }
 
 #prevSong,
 #nextSong {
-  font-size: 150%;
+  font-size: 160%;
 }
-section :not(.columncontainer):not(.imagecontainer):not(.buttoncontainer) {
+section
+  :not(.columncontainer):not(.imagecontainer):not(.buttoncontainer):not(.playlistpart):not(.headerTitle) {
   flex: 1;
   text-align: center;
 }
@@ -182,21 +201,24 @@ section
   flex: 8;
 }
 
-/* The Modal (background) */
-.modal {
-  display: none;
+.headerTitle {
+  flex: 20;
+}
+
+/* The dialog (background) */
+.dialog {
   position: fixed;
   z-index: 1;
   border-radius: 1vw;
   left: 0;
   top: 0;
-  --Width: 30vw;
-  --Height: 11vw;
+  --Width: 25vw;
+  --Height: 10.5vw;
   overflow: auto;
   width: var(--Width);
   height: var(--Height);
-  min-width: 380px;
-  min-height: 140px;
+  min-width: 15vw; /* 380px;*/
+  min-height: 180px;
   border: 1px solid black;
   margin-left: calc(calc(100% - var(--Width)) / 2);
   margin-top: calc(calc(100vw - var(--Height)) / 8);
@@ -208,41 +230,83 @@ section
   );
 }
 
-/* Modal Content/Box */
-.modal-content {
-  background-color: #fefefe;
+.confirmDlg,
+.addSongDlg {
+  display: none;
+}
+
+/* dialog Content/Box */
+.dialog-content {
+  width: 95%;
+  padding: 10px;
   color: black;
   margin: 5% auto;
-  padding: 10px;
-  border: 1px solid #888;
-  width: 95%;
-  border-radius: 1vw;
   font-size: 120%;
+  border-radius: 1vw;
+  text-align: center;
+  border: 1px solid #888;
+  background-color: #fefefe;
+}
+
+.addSongDlg {
+  padding: 5px;
+  --Width: 22vw;
+  color: White;
+  font-size: 120%;
+  min-height: 270px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid black;
+}
+
+.myForm {
+  width: 100%;
+  margin-top: 5%;
+  padding: 0 10px;
+  /* border: 1px solid green; */
+}
+
+.myForm p,
+.myForm input[type="text"],
+.myForm input[type="url"] {
+  padding: 0 5px;
+  margin: 2px 0;
+  width: 100%;
+  border-radius: 0.5vw;
+}
+
+.myForm input[type="submit"] {
+  margin-left: 47%;
+  align-self: center;
   text-align: center;
 }
 
-.modalOK {
-  margin-left: 45%;
+.dialogOK {
+  margin-left: 47%;
 }
 
 /* The close Button */
-.modalAbort {
+.dialogCancel {
   float: right;
   line-height: 16px;
 }
+/* 
+.dialogcancel,
+:not(form .dialogCancel) {
+} */
 
-.modalOK,
-.modalAbort {
+.dialogOK,
+.dialogCancel {
   padding: 3px;
   font-size: 28px;
   font-weight: bold;
   color: whitesmoke;
 }
 
-.modalAbort:hover,
-.modalAbort:focus,
-.modalOK:hover,
-.modalOK:focus {
+.dialogCancel:hover,
+.dialogCancel:focus,
+.dialogOK:hover,
+.dialogOK:focus {
   color: darkgray;
   text-decoration: none;
   cursor: pointer;

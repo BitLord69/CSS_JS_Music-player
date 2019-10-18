@@ -9,20 +9,29 @@ function eventFire(el, callFunction) {
   } // else
 } // eventFire
 
-// Function to show a custom modal dialog box
-function showDialog(message, okcallback, cancelcallback) {
-  $(".modal").show();
-  $(".modal-content p").text(message);
-  $(".modalOK").unbind("click");
-  $(".modalOK").click(okcallback);
-  $(".modalAbort").unbind("click");
-  $(".modalAbort").click(cancelcallback);
-} // showDialog
+// Function to show a custom dialog dialog box
+function showConfirmDialog(message, okcallback, cancelcallback) {
+  $(".confirmDlg").show();
+  $(".dialog-content p").text(message);
+  $(".dialogOK").unbind("click");
+  $(".dialogOK").click(okcallback);
+  $(".dialogCancel").unbind("click");
+  $(".dialogCancel").click(cancelcallback);
+} // showConfirmDialog
 
-// Funtion to hide the custom modal box
+// Funtion to hide the custom dialog box
 function hideDialog() {
-  $(".modal").hide();
+  $(".dialog").hide();
 } // hideDialog
+
+// Function to show a custom dialog dialog box
+function showAddSongDialog(okcallback, cancelcallback) {
+  $(".addSongDlg").show();
+  $(".dialogOK").unbind("click");
+  $(".dialogOK").click(okcallback);
+  $(".dialogCancel").unbind("click");
+  $(".dialogCancel").click(cancelcallback);
+} // showAddSongDialog
 
 function shrink() {
   document.getElementById("playlist").style.display = "none";
@@ -98,7 +107,7 @@ function pauseSong(event) {
   $("#stopSong").css("display", "none");
   player.pause();
 
-  startPlaybackTime = Date.now();
+  // startPlaybackTime = Date.now();
 } // pauseSong
 
 function formatTime(dateObject) {
@@ -119,6 +128,7 @@ function continueDlg() {
       bubbles: false,
       cancelable: true
     });
+
     playSong(e);
     hideDialog();
   } // ok
@@ -127,11 +137,27 @@ function continueDlg() {
     hideDialog();
   } // cancel
 
-  showDialog(
+  showConfirmDialog(
     "You have been playing for a long while now - still alive?",
     ok,
     cancel
   );
+} // continueDlg
+
+function addSongDlg() {
+  function s_ok() {
+    // add save functionality here
+    console.log("Pressedn OK (sumbit) in Addsong...");
+    hideDialog();
+  } // ok
+
+  function s_cancel() {
+    console.log("pressed Cancel in Addsong...");
+    hideDialog();
+  } // cancel
+
+  console.log("Before showAddSongDialog...");
+  showAddSongDialog(s_ok, s_cancel);
 } // continueDlg
 
 function updateTimers() {
@@ -220,16 +246,47 @@ function init() {
   // Make sure the two player control buttons' visibility is properly set
   $("#startSong").css("display", "block");
   $("#stopSong").css("display", "none");
+
+  $(".fas fa-ellipsis-v").click(addSongDlg);
 } // init
 
 // Set up global variables
 let currentSong = 1; // Yup, we should start on the first song
 let seek = $("#seek"); // Ease-of-acces variable for the seeker bar
 let player = new Audio(); // Create the actual audio obejct
-let playLimitInMillis = 10000; // How long to play before the player asks for your presence
+let playLimitInMillis = 600000; // How long to play before the player asks for your presence
 let loopColorHighlit = "lime"; // Set the highlight color for the loop button
 let startPlaybackTime = Date.now(); // Create the played time variable
 let loopColor = $("#loopSong").css("color"); // Save the original color of hte loop button
 let playListLength = $(".playlistItem").length; // Contains the number of songs in the playlist
+
+$(document).ready(function() {
+  // Form submit callback (new playlist item)
+  $("form").submit(function(event) {
+    event.preventDefault();
+
+    // Create a new playlist item from the template
+    // Make the clone with all onclicks intact and all the child elements
+    var $newSong = $("#songTemplate").clone(true, true);
+
+    // Populate the new object with the values from the dialog
+    $newSong.attr("id", playListLength);
+    $newSong.find(".playlistimage").attr("src", $("#songCoverURL").val());
+    $newSong.find(".playlistimage").attr("data-songurl", $("#songURL").val());
+    $newSong.find("#templateSongName").html($("#songName").val());
+    $newSong.find("#templateArtist").html($("#artistName").val());
+
+    // Remove the ids (so we don't get many elements with the same id)
+    $newSong.find("#templateSongName").removeAttr("id", "");
+    $newSong.find("#templateArtist").removeAttr("id");
+
+    // Append it to the list and show it
+    $("#playlist").append($newSong);
+    // $newSong.css("display", "block");
+
+    playListLength++;
+    hideDialog();
+  });
+});
 
 $(init());
