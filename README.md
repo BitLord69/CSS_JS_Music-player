@@ -1,8 +1,8 @@
 # CSS_JS_Music-player
 Music player made in HTML/CSS/JS
 
-Current features:
-  -Plays songs :)
+Current features: <br>
+  -Plays songs :) <br>
   -Play any song in the list by clicking it
   -Song/artist info is updated in the main part for the currently played song
   -Current song is highlit in the list
