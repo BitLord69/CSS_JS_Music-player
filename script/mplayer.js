@@ -160,7 +160,6 @@ function addSongDlg() {
 
 function updateTimers() {
   if (!isNaN(player.duration)) {
-    seek.attr("min", 0);
     seek.attr("max", player.duration);
     seek.attr("value", player.currentTime);
     $("#songDuration").text(formatTime(new Date(player.duration * 1000)));
@@ -177,8 +176,6 @@ function updateTimers() {
 // Called when the user slides the bar to change song position
 function seekbarSlide() {
   player.currentTime = $(this).val();
-  seek.attr("0", 0);
-  seek.attr("max", player.duration);
   $("#currentTime").text(formatTime(new Date($(this).val() * 1000)));
 } // seekbarSlide
 

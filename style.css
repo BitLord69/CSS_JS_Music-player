@@ -227,8 +227,8 @@ section
   overflow: auto;
   width: var(--Width);
   height: var(--Height);
-  min-width: 15vw;
-  /* min-height: 140px; */
+  min-width: 10vw;
+  min-height: 170px;
   border: 1px solid black;
   margin-left: calc(calc(100% - var(--Width)) / 2);
   margin-top: calc(calc(100vw - var(--Height)) / 8);
