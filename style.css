@@ -6,8 +6,11 @@ body {
   color: white;
   font-size: 70%;
   align-items: center;
-  /* font-family: "Montserrat", sans-serif; */
   font-family: "Righteous", cursive;
+}
+
+i {
+  margin: 6px;
 }
 
 button {
@@ -35,7 +38,7 @@ button {
 }
 
 .mainpart {
-  min-width: 12vw;
+  min-width: 15vw;
   min-height: 40vh;
   align-items: center;
   justify-content: space-between;
@@ -48,9 +51,11 @@ button {
 }
 
 .columncontainer {
-  min-width: 15vw;
-  padding: 5px 4px;
+  min-width: 12vw;
+  width: 100%;
+  padding: 3px 5px;
   justify-content: space-between;
+  /* border: 1px solid greenyellow; */
 }
 
 .flexed,
@@ -62,7 +67,7 @@ button {
 .headerContainer {
   margin: auto;
   display: flex;
-  min-width: 15vw;
+  min-width: 12vw;
   padding: 5px 4px;
   align-items: center;
   justify-content: space-between;
@@ -77,8 +82,9 @@ button {
 }
 
 .playedimagecontainer {
-  min-width: 11vw;
-  min-height: 11vh;
+  min-width: 10vw;
+  min-height: 10vh;
+  width: 90%;
   background-size: contain;
   background-position: 50% 50%;
   background-repeat: no-repeat;
@@ -87,8 +93,8 @@ button {
 
 .meter {
   width: 100%;
-  height: 8px;
-  margin: 10px 10px;
+  height: 10px;
+  margin: 2px 5px;
   border-radius: 1vw;
   background-color: black;
   border: 1px solid green;
@@ -132,30 +138,33 @@ input::-webkit-slider-thumb {
 .buttoncontainer {
   flex: 1;
   display: flex;
-  padding: 0 30px;
+  padding: 3px 10px;
   align-items: center;
   justify-content: space-around;
 }
 
 .songinfocontainer {
+  min-width: 5vw;
   display: flex;
   align-items: center;
+  justify-content: space-around;
   flex-direction: column;
-}
-
-.smalltext {
-  font-size: 75%;
-  min-width: 3vw; /* 100px */
-  overflow: hidden;
-  color: lightgray;
-  text-overflow: ellipsis;
-  text-align: left;
 }
 
 .playlistpart {
   color: lightgray;
   justify-content: start;
   align-items: flex-start;
+}
+
+.smalltext {
+  font-size: 75%;
+  min-width: 5%;
+  /* 100px */
+  overflow: hidden;
+  color: lightgray;
+  text-overflow: ellipsis;
+  text-align: left;
 }
 
 .hovercontainer {
@@ -190,15 +199,21 @@ input::-webkit-slider-thumb {
 #nextSong {
   font-size: 160%;
 }
+
 section
-  :not(.columncontainer):not(.imagecontainer):not(.buttoncontainer):not(.playlistpart):not(.headerTitle) {
+  :not(.columncontainer):not(.imagecontainer):not(.buttoncontainer):not(.playlistpart):not(.headerTitle):not(.wide) {
   flex: 1;
   text-align: center;
 }
 
-section
-  :not(.columncontainer):nth-child(2):not(.imagecontainer):not(article):not(i) {
-  flex: 8;
+.wide {
+  flex: 7;
+  width: 100%;
+  /* min-width: 9vw; */
+}
+
+.playlistitem {
+  text-align: center;
 }
 
 .headerTitle {
@@ -250,7 +265,7 @@ section
 
 .addSongDlg {
   padding: 5px;
-  --Width: 22vw;
+  --Width: 30vw;
   color: White;
   font-size: 120%;
   min-height: 270px;
@@ -290,10 +305,6 @@ section
   float: right;
   line-height: 16px;
 }
-/* 
-.dialogcancel,
-:not(form .dialogCancel) {
-} */
 
 .dialogOK,
 .dialogCancel {
