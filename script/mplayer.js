@@ -12,11 +12,11 @@ function eventFire(el, callFunction) {
 // Function to show a custom dialog dialog box
 function showConfirmDialog(message, okcallback, cancelcallback) {
   $(".confirmDlg").show();
-  $(".dialog-content p").text(message);
-  $(".dialogOK").unbind("click");
-  $(".dialogOK").click(okcallback);
-  $(".dialogCancel").unbind("click");
-  $(".dialogCancel").click(cancelcallback);
+  $(".confirmDlg .dialog-content p").text(message);
+  $(".confirmDlg .dialogOK").unbind("click");
+  $(".confirmDlg .dialogOK").click(okcallback);
+  $(".confirmDlg .dialogCancel").unbind("click");
+  $(".confirmDlg .dialogCancel").click(cancelcallback);
 } // showConfirmDialog
 
 // Funtion to hide the custom dialog box
@@ -25,12 +25,10 @@ function hideDialog() {
 } // hideDialog
 
 // Function to show a custom dialog dialog box
-function showAddSongDialog(okcallback, cancelcallback) {
+function showAddSongDialog(cancelcallback) {
   $(".addSongDlg").show();
-  $(".dialogOK").unbind("click");
-  $(".dialogOK").click(okcallback);
-  $(".dialogCancel").unbind("click");
-  $(".dialogCancel").click(cancelcallback);
+  $(".addSongDlg .dialogCancel").unbind("click");
+  $(".addSongDlg .dialogCancel").click(cancelcallback);
 } // showAddSongDialog
 
 function shrink() {
@@ -145,20 +143,12 @@ function continueDlg() {
 } // continueDlg
 
 function addSongDlg() {
-  function s_ok() {
-    // add save functionality here
-    console.log("Pressedn OK (sumbit) in Addsong...");
-    hideDialog();
-  } // ok
-
-  function s_cancel() {
-    console.log("pressed Cancel in Addsong...");
+  function cancel() {
     hideDialog();
   } // cancel
 
-  console.log("Before showAddSongDialog...");
-  showAddSongDialog(s_ok, s_cancel);
-} // continueDlg
+  showAddSongDialog(cancel);
+} // addSongDlg
 
 function updateTimers() {
   if (!isNaN(player.duration)) {
@@ -243,22 +233,12 @@ function init() {
   // Make sure we load the right data into the 'currently played' part of the player
   eventFire($(".playlistItem")[currentSong - 1], "click");
 
-  // Make sure the two player control buttons' visibility is properly set
+  // Make sure the two player control buttons' visibility are properly set
   $("#startSong").css("display", "block");
   $("#stopSong").css("display", "none");
 
-  $(".fas fa-ellipsis-v").click(addSongDlg);
+  $("#hamburgers").click(addSongDlg);
 } // init
-
-// Set up global variables
-let currentSong = 1; // Yup, we should start on the first song
-let seek = $("#seek"); // Ease-of-acces variable for the seeker bar
-let player = new Audio(); // Create the actual audio obejct
-let playLimitInMillis = 600000; // How long to play before the player asks for your presence
-let loopColorHighlit = "lime"; // Set the highlight color for the loop button
-let startPlaybackTime = Date.now(); // Create the played time variable
-let loopColor = $("#loopSong").css("color"); // Save the original color of hte loop button
-let playListLength = $(".playlistItem").length; // Contains the number of songs in the playlist
 
 $(document).ready(function() {
   // Form submit callback (new playlist item)
@@ -287,6 +267,16 @@ $(document).ready(function() {
     playListLength++;
     hideDialog();
   });
+
+  $(init());
 });
 
-$(init());
+// Set up global variables
+let currentSong = 1; // Yup, we should start on the first song
+let seek = $("#seek"); // Ease-of-acces variable for the seeker bar
+let player = new Audio(); // Create the actual audio obejct
+let playLimitInMillis = 10000; // How long to play before the player asks for your presence
+let loopColorHighlit = "lime"; // Set the highlight color for the loop button
+let startPlaybackTime = Date.now(); // Create the played time variable
+let loopColor = $("#loopSong").css("color"); // Save the original color of hte loop button
+let playListLength = $(".playlistItem").length; // Contains the number of songs in the playlist

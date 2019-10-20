@@ -31,21 +31,21 @@
         <!-- Här ligger headern -->
         <section class="headerContainer">
           <section class="hovercontainer">
-          <article>
-            <button id="expandbtn" onclick="shrink()">
-              <i id="expandIcon" class="fas fa-angle-right"></i>
-            </button>
-          </article>
+            <article>
+              <button id="expandbtn" onclick="shrink()">
+                <i id="expandIcon" class="fas fa-angle-right"></i>
+              </button>
+            </article>
           </section>
           <section class="headerTitle">
             <article>Playlist - bluesy</article>
           </section>
           <section class="hovercontainer">
-          <article>
-            <button id="ellipsisBtn" onclick="showAddSongDialog()">
-              <i class="fas fa-ellipsis-v"></i>
-            </button>
-          </article>
+            <article>
+              <button id="hamburgers">
+                <i class="fas fa-ellipsis-v"></i>
+              </button>
+            </article>
           </section>
         </section>
         <!-- Yttre behållare som innehåller spellistan och spelarföntret -->
@@ -61,7 +61,7 @@
                   data-songurl="https://archive.org/download/Welcome_Aboard-5483/Tom_Caruana_-_07_-_Get_It_Off_Your_Chest.mp3"
                 />
               </section>
-              <section class="songinfocontainer playlistpart">
+              <section class="songinfocontainer playlistpart wide">
                 <section>
                   <article>Fat bottomed girl</article>
                 </section>
@@ -82,7 +82,7 @@
                   data-songurl="https://archive.org/download/Wiggle_1236-13478/Dr_Wylie_-_10_-_Little_Boxes.mp3"
                 />
               </section>
-              <section class="songinfocontainer playlistpart">
+              <section class="songinfocontainer playlistpart wide">
                 <section>
                   <article>Brand new hate</article>
                 </section>
@@ -105,7 +105,7 @@
                   data-songurl="https://archive.org/download/Big_Buck_Bunny-13302/Jan_Morgenstern_-_02_-_All_Ears.mp3"
                 />
               </section>
-              <section class="songinfocontainer playlistpart">
+              <section class="songinfocontainer playlistpart wide">
                 <section>
                   <article>Still got the blues</article>
                 </section>
@@ -128,7 +128,7 @@
               <section class="hovercontainer">
                 <article><i class="far fa-plus-square"></i></article>
               </section>
-              <section class="songinfocontainer">
+              <section class="songinfocontainer wide">
                 <section>
                   <article id="songTitle"></article>
                 </section>
@@ -143,23 +143,23 @@
             <!-- Tredje raden, tid och progress bar för låten som spelas -->
             <section class="columncontainer">
               <section>
-                <article class="smalltext" id="currentTime">0:00</article>
+                <article class="smalltext left" id="currentTime">0:00</article>
               </section>
-              <section class="flexed hovercontainer">
+              <section class="flexed hovercontainer wide">
                 <article class="meter">
                   <input type="range" id="seek" value="0" max="999" />
                 </article>
               </section>
-              <section>
-                <article class="smalltext" id="songDuration">-</article>
+              <section class="smalltext right" >
+                <article id="songDuration">-</article>
               </section>
             </section>
             <!-- Sista raden, spelarkontroller -->
             <section class="columncontainer">
               <section class="hovercontainer">
-                <i class="fas fa-sync-alt" id="loopSong"></i>
+                <i class="fas fa-sync-alt left" id="loopSong"></i>
               </section>
-              <section class="buttoncontainer">
+              <section class="buttoncontainer wide">
                 <i class="fas fa-backward hovercontainer" id="prevSong"></i>
                 <i class="fas fa-play-circle hovercontainer" id="startSong"></i>
                 <i class="fas fa-pause-circle hovercontainer" id="stopSong"></i>
@@ -176,7 +176,7 @@
     </section>
 
     <!-- Modal dialog istället för confirm -->
-    <div id="myConfirmDlg" class="dialog columncontainer confirmDlg">
+    <div class="dialog columncontainer confirmDlg">
       <span class="dialogCancel">&times;</span>
       <!-- Modal content -->
       <div class="dialog-content">
@@ -188,9 +188,7 @@
 
     <!-- Inmatningsdialog för ny låt -->
     <div class="dialog maincolumns addSongDlg">
-      <button class="dialogCancel">
-        &times;
-      </button>
+      <span class="dialogCancel">&times;</span>
       <form action="" class="myForm">
         <p>Låttitel:</p>
         <input type="text" id="songName" value="" />
@@ -219,7 +217,7 @@
       <section>
         <img class="playlistimage" src="" data-songurl="" />
       </section>
-      <section class="songinfocontainer playlistpart">
+      <section class="songinfocontainer playlistpart wide">
         <section>
           <article id="templateSongName"></article>
         </section>
