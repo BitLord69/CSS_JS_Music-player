@@ -97,12 +97,19 @@ function playSong(event) {
     startPlaybackTime = Date.now();
   }
 
+  if (stoppedPlaying) {
+    stoppedPlaying = false;
+    startPlaybackTime = Date.now();
+  } // if stoppedPlaying...
+
   player.play();
 } // playSong
 
 function pauseSong(event) {
   $("#startSong").css("display", "block");
   $("#stopSong").css("display", "none");
+  stoppedPlaying = true;
+
   player.pause();
 
   // startPlaybackTime = Date.now();
@@ -133,6 +140,7 @@ function continueDlg() {
 
   function cancel() {
     hideDialog();
+    stoppedPlaying = true;
   } // cancel
 
   showConfirmDialog(
@@ -157,7 +165,8 @@ function updateTimers() {
     $("#songDuration").text(formatTime(new Date(player.duration * 1000)));
     $("#currentTime").text(formatTime(new Date(player.currentTime * 1000)));
 
-    if (Date.now() - startPlaybackTime > playLimitInMillis) {
+    // Has the play time limit been exceeded?
+    if (!stoppedPlaying && Date.now() - startPlaybackTime > playLimitInMillis) {
       pauseSong();
       continueDlg();
     } // if Date.now...
@@ -275,7 +284,8 @@ $(document).ready(function() {
 let currentSong = 1; // Yup, we should start on the first song
 let seek = $("#seek"); // Ease-of-acces variable for the seeker bar
 let player = new Audio(); // Create the actual audio obejct
-let playLimitInMillis = 10000; // How long to play before the player asks for your presence
+let stoppedPlaying = true; // Did the user abort playing?
+let playLimitInMillis = 10010; // How long to play before the player asks for your presence
 let loopColorHighlit = "lime"; // Set the highlight color for the loop button
 let startPlaybackTime = Date.now(); // Create the played time variable
 let loopColor = $("#loopSong").css("color"); // Save the original color of hte loop button
