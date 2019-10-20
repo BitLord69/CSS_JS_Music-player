@@ -74,6 +74,13 @@ function changeSong(event) {
   playSong(e);
 } // changeSong
 
+function resetSlider() {
+  seek.attr("min", 0);
+  seek.attr("value", 0);
+  seek.attr("defaultValue", 0);
+  seek.attr("max", player.duration);
+} // resetSlider
+
 function playSong(event) {
   $("#startSong").css("display", "none");
   $("#stopSong").css("display", "block");
@@ -86,16 +93,11 @@ function playSong(event) {
     (event.type != "MyEvent" && event.data.newSong)
   ) {
     player.src = $(".playedimagecontainer").attr("data-songurl");
-    seek.attr("max", player.duration);
+    resetSlider();
   } // if event.type...
-
-  // Not a new song, start the playing counter anew
-  if (
-    (event.type === "MyEvent" && !event.detail.newSong) ||
-    (event.type != "MyEvent" && !event.data.newSong)
-  ) {
+  else {
     startPlaybackTime = Date.now();
-  }
+  } // else, not a new song
 
   if (stoppedPlaying) {
     stoppedPlaying = false;
@@ -111,8 +113,6 @@ function pauseSong(event) {
   stoppedPlaying = true;
 
   player.pause();
-
-  // startPlaybackTime = Date.now();
 } // pauseSong
 
 function formatTime(dateObject) {
@@ -160,6 +160,7 @@ function addSongDlg() {
 
 function updateTimers() {
   if (!isNaN(player.duration)) {
+    seek.attr("min", 0);
     seek.attr("max", player.duration);
     seek.attr("value", player.currentTime);
     $("#songDuration").text(formatTime(new Date(player.duration * 1000)));
@@ -176,6 +177,7 @@ function updateTimers() {
 // Called when the user slides the bar to change song position
 function seekbarSlide() {
   player.currentTime = $(this).val();
+  seek.attr("0", 0);
   seek.attr("max", player.duration);
   $("#currentTime").text(formatTime(new Date($(this).val() * 1000)));
 } // seekbarSlide
@@ -183,7 +185,7 @@ function seekbarSlide() {
 // Gets called when the song has ended
 function songEnd() {
   player.currentTime = 0;
-  seek.attr("value", 0);
+  resetSlider();
 
   // Is there another song to play?
   if (currentSong < playListLength) {
@@ -210,7 +212,7 @@ function prevSong() {
 } // prevSong
 
 function nextSong() {
-  if (currentSong < playListLength) {
+  if (currentSong < playListLength - 1) {
     $($(".playlistItem")[currentSong - 1]).removeClass("currentlyPlaying");
     eventFire($(".playlistItem")[currentSong++], "click");
   } // if currentSong...
