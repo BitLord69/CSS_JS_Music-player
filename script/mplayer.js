@@ -75,8 +75,7 @@ function changeSong(event) {
 } // changeSong
 
 function resetSlider() {
-  seek.attr("min", 0);
-  seek.attr("value", 0);
+  seek.val(0);
   seek.attr("defaultValue", 0);
   seek.attr("max", player.duration);
 } // resetSlider
@@ -84,7 +83,7 @@ function resetSlider() {
 function playSong(event) {
   $("#startSong").css("display", "none");
   $("#stopSong").css("display", "block");
-  seek.attr("value", 0);
+  seek.val(0);
 
   // Check the extra event data, ie if it's a new song or not
   // Since a custom event's data field is named differently than a built in's, check this
@@ -161,7 +160,7 @@ function addSongDlg() {
 function updateTimers() {
   if (!isNaN(player.duration)) {
     seek.attr("max", player.duration);
-    seek.attr("value", player.currentTime);
+    seek.val(player.currentTime);
     $("#songDuration").text(formatTime(new Date(player.duration * 1000)));
     $("#currentTime").text(formatTime(new Date(player.currentTime * 1000)));
 
@@ -203,7 +202,7 @@ function prevSong() {
     eventFire($(".playlistItem")[--currentSong - 1], "click");
   } else {
     player.currentTime = 0;
-    seek.attr("value", 0);
+    seek.val(0);
     updateTimers();
   } // else...
 } // prevSong
